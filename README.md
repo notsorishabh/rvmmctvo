@@ -12,14 +12,15 @@ Not deployed yet. Vercel CLI is not logged in on this machine. Use the click pat
 .
 ├── README.md                  # this file
 ├── CURSOR_SPEC.md             # assignment spec
-├── Dockerfile                 # multi-stage: Node 20 build, Python 3.11 serve
+├── Dockerfile                 # multi-stage: Node 20 build, Python 3.12 serve
 ├── docker-compose.yml         # one service, port 8000
 ├── .dockerignore
 ├── .gitignore
-├── .python-version            # 3.11 for Vercel
+├── .python-version            # 3.12 for Vercel
 ├── vercel.json                # SPA output + /api rewrite to the Python function
 ├── requirements.txt           # pinned API runtime deps only
 ├── pyproject.toml             # Python metadata and Vercel entrypoint
+├── uv.lock                    # locked API deps for Python >=3.12
 ├── pytest.ini
 ├── api/
 │   └── index.py               # Vercel function: imports backend.app.main:app
@@ -62,7 +63,7 @@ Open http://localhost:8000. The image contains `wind.db` and the built UI. There
 
 **(b) Without Docker**
 
-Python 3.11+ and Node 20+.
+Python 3.12+ and Node 20+.
 
 ```bash
 pip install -r requirements.txt
@@ -91,6 +92,7 @@ The spec lists `https://bmrs.elexon.co.uk/api/v1/datasets`. That host now return
 
 ## Method and assumptions
 
+- Runtime is **Python 3.12** (`.python-version`, Docker `python:3.12-slim`, Vercel).
 - Default decision cutoff is **09:00 UTC on D-1**. It is configurable because GB auctions do not all close at 09:00: EPEX GB around 09:20, N2EX around 09:50. Presets for those three times sit in the control bar.
 - January UK civil time equals UTC, so every timestamp is stored and shown as UTC.
 - A forecast hour starting at H:00 is compared with the **mean of the FUELHH actuals at H:00 and H:30**. If either half-hour is missing, that hour is dropped.
