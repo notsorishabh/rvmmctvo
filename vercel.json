@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm ci --prefix frontend && npm run build --prefix frontend",
+  "outputDirectory": "frontend/dist",
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index" },
+    { "source": "/((?!assets/).*)", "destination": "/index.html" }
+  ],
+  "functions": {
+    "api/index.py": {
+      "includeFiles": "backend/data/wind.db",
+      "excludeFiles": "{backend/tests/**,backend/data/raw/**,backend/scripts/**,frontend/node_modules/**,frontend/src/**}",
+      "maxDuration": 60
+    }
+  }
+}

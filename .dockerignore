@@ -1,0 +1,10 @@
+node_modules
+.git
+__pycache__
+*.pyc
+frontend/dist
+.venv
+backend/data/raw
+.pytest_cache
+frontend/node_modules
+.vercel
